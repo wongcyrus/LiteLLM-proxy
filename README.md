@@ -1,6 +1,6 @@
-# LiteLLM Proxy
+# LiteLLM Proxy Setup
 
-A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Gemini 3.1)** and **Azure OpenAI (GPT-5.2)** with PostgreSQL persistence and virtual key budgeting.
+A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Gemini 3.1, 2.5, 1.5)** and **Azure OpenAI (GPT-5.2)** with PostgreSQL persistence and virtual key budgeting.
 
 ## 🚀 Quick Start
 
@@ -13,26 +13,12 @@ A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Ge
 *   **Azure OpenAI API Key** and Resource Endpoint.
 
 ### 2. Configuration
-Update the `.env` file with your actual credentials:
-```env
-# Vertex AI
-VERTEXAI_PROJECT=<YOUR_GCP_PROJECT_ID>
-VERTEXAI_LOCATION=global
-
-# Azure OpenAI
-AZURE_API_KEY=<YOUR_AZURE_API_KEY>
-AZURE_API_BASE=https://<YOUR_RESOURCE_NAME>.openai.azure.com/
-
-# Security
-LITELLM_MASTER_KEY=<YOUR_CHOSEN_MASTER_KEY>
-```
+Update the `.env` file with your actual credentials.
 
 ### 3. Deployment
-Start the stack (LiteLLM + PostgreSQL):
 ```bash
 docker compose up -d
 ```
-The API will be available at `http://localhost:4000` (and your local network IP).
 
 ---
 
@@ -40,20 +26,20 @@ The API will be available at `http://localhost:4000` (and your local network IP)
 
 | Model Alias | Provider | Underlying Model |
 | :--- | :--- | :--- |
-| `gemini-3.1-flash-lite-preview` | Vertex AI | `vertex_ai/gemini-3.1-flash-lite-preview` |
-| `gpt-5.2` | Azure OpenAI | `azure/gpt-5.2` (with reasoning support) |
+| **`gemini-3.1-flash-lite-preview`** | Vertex AI | `vertex_ai/gemini-3.1-flash-lite-preview` |
+| **`gemini-3.1-pro-preview`** | Vertex AI | `vertex_ai/gemini-3.1-pro-preview` |
+| **`gemini-3.1-pro-preview-customtools`** | Vertex AI | `vertex_ai/gemini-3.1-pro-preview` (with tools) |
+| **`gemini-3-flash-preview`** | Vertex AI | `vertex_ai/gemini-3-flash-preview` |
+| **`gemini-2.5-pro`** | Vertex AI | `vertex_ai/gemini-2.5-pro` |
+| **`gemini-2.5-flash`** | Vertex AI | `vertex_ai/gemini-2.5-flash` |
+| **`gemini-2.5-flash-lite`** | Vertex AI | `vertex_ai/gemini-2.5-flash-lite` |
+| **`gemini-1.5-pro`** | Vertex AI | `vertex_ai/gemini-1.5-pro` |
+| **`gpt-5.2`** | Azure OpenAI | `azure/gpt-5.2` (with reasoning support) |
 
 ---
 
 ## 🔑 Key & Budget Management
-
-This setup uses a **PostgreSQL database** to persist virtual keys and track spending.
-
-### Master Key
-Use this for administrative tasks (generating keys, checking stats).
-
-### Virtual Keys (Budgeting)
-Generate keys with specific budget limits and reset durations.
+Track spending and create virtual keys with PostgreSQL.
 
 #### Generate a new key with a budget:
 ```bash
@@ -69,15 +55,9 @@ curl -X POST 'http://localhost:4000/key/generate' \
 
 ---
 
-## 📡 Network Access
-The proxy is configured to listen on `0.0.0.0:4000`, making it accessible to other machines in your local network.
-
-**Endpoint:** `http://<YOUR_HOST_IP>:4000/v1/chat/completions`
-
----
-
 ## 🧪 Testing
-Run the included test script to verify both providers:
+Run the included test script:
 ```bash
 ./test_litellm.sh
 ```
+To test specific models, use `curl` or `openclaw models set litellm/<model-alias>`.

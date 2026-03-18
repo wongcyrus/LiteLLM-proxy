@@ -1,5 +1,5 @@
 model_list:
-  # Vertex AI Gemini
+  # Gemini 3.1 Series
   - model_name: gemini-3.1-flash-lite-preview
     litellm_params:
       model: vertex_ai/gemini-3.1-flash-lite-preview
@@ -15,15 +15,54 @@ model_list:
         - category: HARM_CATEGORY_HARASSMENT
           threshold: BLOCK_NONE
 
-  # Azure OpenAI Configuration (from your curl)
+  - model_name: gemini-3.1-pro-preview
+    litellm_params:
+      model: vertex_ai/gemini-3.1-pro-preview
+      vertex_project: "os.environ/VERTEXAI_PROJECT"
+      vertex_location: "os.environ/VERTEXAI_LOCATION"
+
+  - model_name: gemini-3.1-pro-preview-customtools
+    litellm_params:
+      model: vertex_ai/gemini-3.1-pro-preview
+      vertex_project: "os.environ/VERTEXAI_PROJECT"
+      vertex_location: "os.environ/VERTEXAI_LOCATION"
+      # Enable Google Search tool by default for this alias
+      tools:
+        - google_search: {}
+
+  # Gemini 3.0 Series
+  - model_name: gemini-3-flash-preview
+    litellm_params:
+      model: vertex_ai/gemini-3-flash-preview
+      vertex_project: "os.environ/VERTEXAI_PROJECT"
+      vertex_location: "os.environ/VERTEXAI_LOCATION"
+
+  # Gemini 2.5 Series
+  - model_name: gemini-2.5-pro
+    litellm_params:
+      model: vertex_ai/gemini-2.5-pro
+      vertex_project: "os.environ/VERTEXAI_PROJECT"
+      vertex_location: "os.environ/VERTEXAI_LOCATION"
+
+  - model_name: gemini-2.5-flash
+    litellm_params:
+      model: vertex_ai/gemini-2.5-flash
+      vertex_project: "os.environ/VERTEXAI_PROJECT"
+      vertex_location: "os.environ/VERTEXAI_LOCATION"
+
+  - model_name: gemini-2.5-flash-lite
+    litellm_params:
+      model: vertex_ai/gemini-2.5-flash-lite
+      vertex_project: "os.environ/VERTEXAI_PROJECT"
+      vertex_location: "os.environ/VERTEXAI_LOCATION"
+
+  # Azure OpenAI Configuration
   - model_name: gpt-5.2
     litellm_params:
-      # MUST match your Azure Deployment Name
       model: azure/gpt-5.2
       api_base: "os.environ/AZURE_API_BASE"
       api_key: "os.environ/AZURE_API_KEY"
       api_version: "2024-08-01-preview"
-      # Allow passing reasoning_effort and other newer OpenAI parameters
       drop_params: true
 
 general_settings:
