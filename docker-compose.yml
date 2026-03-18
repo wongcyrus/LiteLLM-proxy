@@ -3,7 +3,7 @@ services:
     image: ghcr.io/berriai/litellm:main-stable
     volumes:
      - ./config.yaml:/app/config.yaml
-     - ~/.config/gcloud/:/root/.config/gcloud/:ro
+     - ${HOME}/.config/gcloud:/root/.config/gcloud:ro
     command:
      - "--config=/app/config.yaml"
      - "--port=4000"

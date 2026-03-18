@@ -13,7 +13,15 @@ A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Ge
 *   **Azure OpenAI API Key** and Resource Endpoint.
 
 ### 2. Configuration
-Update the `.env` file with your actual credentials.
+Create the `.env` file with your actual credentials from `.env.template`.
+#### Google Cloud Authentication
+Execute the authentication command to set up your Google Cloud credentials:
+```bash
+gcloud auth application-default login
+```
+
+#### Azure OpenAI Setup
+Ensure your Azure OpenAI API Key and Resource Endpoint are available for the `.env` configuration.
 
 ### 3. Deployment
 ```bash
