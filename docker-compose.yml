@@ -1,6 +1,7 @@
 services:
   litellm:
     image: ghcr.io/berriai/litellm:main-stable
+    pull_policy: always 
     volumes:
      - ./config.yaml:/app/config.yaml
      - /home/developer/.config/gcloud:/root/.config/gcloud:ro

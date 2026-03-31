@@ -1,6 +1,6 @@
 # LiteLLM Proxy Setup
 
-A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Gemini 3.1, 2.5, 1.5)** and **Azure OpenAI (GPT-5.2)** with PostgreSQL persistence and virtual key budgeting.
+A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Gemini 3.1, 2.5, 1.5)**, **AWS Bedrock (Nova models)**, and **Azure OpenAI (GPT-5.2)** with PostgreSQL persistence and virtual key budgeting.
 
 ## 🚀 Quick Start
 
@@ -10,6 +10,7 @@ A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Ge
     ```bash
     gcloud auth application-default login
     ```
+*   **AWS Bedrock long-term API key** (for Bedrock models).
 *   **Azure OpenAI API Key** and Resource Endpoint.
 
 ### 2. Configuration
@@ -22,6 +23,45 @@ gcloud auth application-default login
 
 #### Azure OpenAI Setup
 Ensure your Azure OpenAI API Key and Resource Endpoint are available for the `.env` configuration.
+
+#### AWS Bedrock Setup (Long-term API Key)
+Set your Bedrock long-term API key and AWS region in `.env`:
+
+```bash
+AWS_BEARER_TOKEN_BEDROCK=<YOUR_AWS_BEDROCK_LONG_TERM_API_KEY>
+AWS_REGION=us-east-1
+```
+
+##### IAM policy required for Nova models
+Create and attach an IAM policy to the IAM user/role that will generate and use the Bedrock long-term API key:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "InvokeNovaModels",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": "arn:aws:bedrock:*::foundation-model/amazon.nova-*"
+    }
+  ]
+}
+```
+
+After attaching this policy:
+1. Create or rotate your Bedrock long-term API key from the same IAM principal.
+2. Put that key into `AWS_BEARER_TOKEN_BEDROCK` in `.env`.
+3. Restart the stack with `docker compose up -d` if it is already running.
+
+If you are using `.env.template`, copy it first and then fill these fields:
+
+```bash
+cp .env.template .env
+```
 
 ### 3. Deployment
 ```bash
@@ -41,6 +81,8 @@ docker compose up -d
 | **`gemini-2.5-pro`** | Vertex AI | `vertex_ai/gemini-2.5-pro` |
 | **`gemini-2.5-flash`** | Vertex AI | `vertex_ai/gemini-2.5-flash` |
 | **`gemini-2.5-flash-lite`** | Vertex AI | `vertex_ai/gemini-2.5-flash-lite` |
+| **`nova-2-lite`** | AWS Bedrock | `bedrock/global.amazon.nova-2-lite-v1:0` |
+| **`nova-1-premier`** | AWS Bedrock | `bedrock/us.amazon.nova-premier-v1:0` |
 | **`gemini-1.5-pro`** | Vertex AI | `vertex_ai/gemini-1.5-pro` |
 | **`gpt-5.2`** | Azure OpenAI | `azure/gpt-5.2` (with reasoning support) |
 
@@ -206,6 +248,40 @@ curl -X POST 'http://localhost:4000/key/generate' \
               "cacheWrite": 0
             },
             "contextWindow": 1048576,
+            "maxTokens": 8192
+          },
+          {
+            "id": "nova-2-lite",
+            "name": "nova-2-lite",
+            "reasoning": false,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 300000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "nova-1-premier",
+            "name": "nova-1-premier",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 300000,
             "maxTokens": 8192
           }
         ]

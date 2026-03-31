@@ -5,15 +5,6 @@ model_list:
       model: vertex_ai/gemini-3.1-flash-lite-preview
       vertex_project: "os.environ/VERTEXAI_PROJECT"
       vertex_location: "os.environ/VERTEXAI_LOCATION"
-      safety_settings:
-        - category: HARM_CATEGORY_HATE_SPEECH
-          threshold: BLOCK_NONE
-        - category: HARM_CATEGORY_DANGEROUS_CONTENT
-          threshold: BLOCK_NONE
-        - category: HARM_CATEGORY_SEXUALLY_EXPLICIT
-          threshold: BLOCK_NONE
-        - category: HARM_CATEGORY_HARASSMENT
-          threshold: BLOCK_NONE
 
   - model_name: gemini-3.1-pro-preview
     litellm_params:
@@ -26,9 +17,6 @@ model_list:
       model: vertex_ai/gemini-3.1-pro-preview
       vertex_project: "os.environ/VERTEXAI_PROJECT"
       vertex_location: "os.environ/VERTEXAI_LOCATION"
-      # Enable Google Search tool by default for this alias
-      tools:
-        - google_search: {}
 
   # Gemini 3.0 Series
   - model_name: gemini-3-flash-preview
@@ -55,6 +43,19 @@ model_list:
       model: vertex_ai/gemini-2.5-flash-lite
       vertex_project: "os.environ/VERTEXAI_PROJECT"
       vertex_location: "os.environ/VERTEXAI_LOCATION"
+
+  # AWS Bedrock Series
+  - model_name: nova-2-lite
+    litellm_params:
+      model: bedrock/global.amazon.nova-2-lite-v1:0  
+      api_key: "os.environ/AWS_BEARER_TOKEN_BEDROCK"
+
+  - model_name: nova-1-premier
+    litellm_params:
+      model: bedrock/us.amazon.nova-premier-v1:0
+      aws_region_name: "os.environ/AWS_REGION"
+      api_key: "os.environ/AWS_BEARER_TOKEN_BEDROCK"
+
 
   # Azure OpenAI Configuration
   - model_name: gpt-5.2
