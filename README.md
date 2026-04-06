@@ -75,6 +75,7 @@ docker compose up -d
 | Model Alias | Provider | Underlying Model |
 | :--- | :--- | :--- |
 | **`gemini-3.1-flash-lite-preview`** | Vertex AI | `vertex_ai/gemini-3.1-flash-lite-preview` |
+| **`gemini-3.1-flash-image-preview`** | Vertex AI | `vertex_ai/gemini-3.1-flash-image-preview` |
 | **`gemini-3.1-pro-preview`** | Vertex AI | `vertex_ai/gemini-3.1-pro-preview` |
 | **`gemini-3.1-pro-preview-customtools`** | Vertex AI | `vertex_ai/gemini-3.1-pro-preview` (with tools) |
 | **`gemini-3-flash-preview`** | Vertex AI | `vertex_ai/gemini-3-flash-preview` |
@@ -134,6 +135,23 @@ curl -X POST 'http://localhost:4000/key/generate' \
           {
             "id": "gpt-5.2",
             "name": "gpt-5.2",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "gemini-3.1-flash-image-preview",
+            "name": "gemini-3.1-flash-image-preview",
             "reasoning": true,
             "input": [
               "text",
