@@ -46,9 +46,10 @@ Create and attach an IAM policy to the IAM user/role that will generate and use 
                 "bedrock:InvokeModelWithResponseStream"
             ],
             "Resource": [
-                "arn:aws:bedrock:us-east-1::foundation-model/amazon.nova-2-lite-v1:0",
-                "arn:aws:bedrock:us-east-1::foundation-model/minimax.minimax-m2.5",
-                "arn:aws:bedrock:us-east-1::foundation-model/moonshotai.kimi-k2.5"
+                "arn:aws:bedrock:*:*:inference-profile/global.amazon.nova-2-lite-v1:0",
+                "arn:aws:bedrock:*::foundation-model/amazon.nova-2-lite-v1:0",
+                "arn:aws:bedrock:*::foundation-model/minimax.minimax-m2.5",
+                "arn:aws:bedrock:*::foundation-model/moonshotai.kimi-k2.5"
             ]
         },
         {
