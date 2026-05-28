@@ -30,29 +30,10 @@ model_list:
       vertex_project: "os.environ/VERTEXAI_PROJECT"
       vertex_location: "os.environ/VERTEXAI_LOCATION"
 
-  # Gemini 3.0 Series
-  - model_name: gemini-3-flash-preview
-    litellm_params:
-      model: vertex_ai/gemini-3-flash-preview
-      vertex_project: "os.environ/VERTEXAI_PROJECT"
-      vertex_location: "os.environ/VERTEXAI_LOCATION"
-
   # Gemini 2.5 Series
   - model_name: gemini-2.5-pro
     litellm_params:
       model: vertex_ai/gemini-2.5-pro
-      vertex_project: "os.environ/VERTEXAI_PROJECT"
-      vertex_location: "os.environ/VERTEXAI_LOCATION"
-
-  - model_name: gemini-2.5-flash
-    litellm_params:
-      model: vertex_ai/gemini-2.5-flash
-      vertex_project: "os.environ/VERTEXAI_PROJECT"
-      vertex_location: "os.environ/VERTEXAI_LOCATION"
-
-  - model_name: gemini-2.5-flash-lite
-    litellm_params:
-      model: vertex_ai/gemini-2.5-flash-lite
       vertex_project: "os.environ/VERTEXAI_PROJECT"
       vertex_location: "os.environ/VERTEXAI_LOCATION"
 
@@ -83,6 +64,30 @@ model_list:
       api_key: "os.environ/AZURE_API_KEY"
       api_version: "2024-08-01-preview"
       drop_params: true
+
+  - model_name: gpt-5.4-mini
+    litellm_params:
+      model: azure/gpt-5.4-mini
+      api_base: "os.environ/AZURE_API_BASE"
+      api_key: "os.environ/AZURE_API_KEY"
+      api_version: "2024-08-01-preview"
+      drop_params: true      
+
+  - model_name: gpt-5.4-nano
+    litellm_params:
+      model: azure/gpt-5.4-nano
+      api_base: "os.environ/AZURE_API_BASE"
+      api_key: "os.environ/AZURE_API_KEY"
+      api_version: "2024-08-01-preview"
+      drop_params: true      
+
+  - model_name: gpt-5.4
+    litellm_params:
+      model: azure/gpt-5.4
+      api_base: "os.environ/AZURE_API_BASE"
+      api_key: "os.environ/AZURE_API_KEY"
+      api_version: "2024-08-01-preview"
+      drop_params: true     
 
 general_settings:
   master_key: "os.environ/LITELLM_MASTER_KEY"
