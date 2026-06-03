@@ -43,18 +43,23 @@ Create and attach an IAM policy to the IAM user/role that will generate and use 
             "Effect": "Allow",
             "Action": [
                 "bedrock:InvokeModel",
-                "bedrock:InvokeModelWithResponseStream"
+                "bedrock:InvokeModelWithResponseStream",
+                "bedrock-mantle:CreateInference"
             ],
             "Resource": [
                 "arn:aws:bedrock:*:*:inference-profile/global.amazon.nova-2-lite-v1:0",
                 "arn:aws:bedrock:*::foundation-model/amazon.nova-2-lite-v1:0",
                 "arn:aws:bedrock:*::foundation-model/minimax.minimax-m2.5",
-                "arn:aws:bedrock:*::foundation-model/moonshotai.kimi-k2.5"
+                "arn:aws:bedrock:*::foundation-model/moonshotai.kimi-k2.5",
+                "arn:aws:bedrock-mantle:us-east-2:*:project/default"
             ]
         },
         {
             "Effect": "Allow",
-            "Action": "bedrock:CallWithBearerToken",
+            "Action": [
+                "bedrock-mantle:CallWithBearerToken",
+                "bedrock:CallWithBearerToken"
+            ],
             "Resource": "*"
         }
     ]
@@ -113,13 +118,15 @@ Track spending and create virtual keys with PostgreSQL.
 #### Generate a new key with a budget:
 ```bash
 curl -X POST 'http://localhost:4000/key/generate' \
--H 'Authorization: Bearer <YOUR_MASTER_KEY>' \
--H 'Content-Type: application/json' \
--d "{
-    \"key_alias\": \"user-key\",
-    \"max_budget\": 10.00,
-    \"budget_duration\": \"1d\"
-}"
+  -H 'Authorization: Bearer <YOUR_MASTER_KEY_STARTING_WITH_sk->' \
+  -H 'Content-Type: application/json' \
+  --data-raw '{
+    "key_alias": "openlaw-key",
+    "models": [],
+    "max_budget": 10,
+    "budget_duration": "1d",
+    "metadata": {"owner": "team-core"}
+  }'
 ```
 
 

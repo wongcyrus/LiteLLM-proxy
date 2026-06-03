@@ -1,2 +1,3 @@
 .env
 test_litellm.sh
+.keys/
