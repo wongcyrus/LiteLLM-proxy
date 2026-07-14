@@ -1,6 +1,6 @@
 # LiteLLM Proxy Setup
 
-A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Gemini 3.5, 3.1, 3.0, 2.5)**, **AWS Bedrock (Nova + Minimax + Kimi)**, and **Azure OpenAI (GPT-5.2)** with PostgreSQL persistence and virtual key budgeting.
+A production-ready LiteLLM Proxy configuration supporting **Google Vertex AI (Gemini 3.5, 3.1, 2.5)**, **AWS Bedrock (Nova + Minimax + Kimi)**, and **Azure OpenAI (GPT-5.2 / GPT-5.4 / GPT-5.6)** with PostgreSQL persistence and virtual key budgeting.
 
 ## 🚀 Quick Start
 
@@ -101,14 +101,17 @@ docker compose up -d
 | **`gemini-3.1-flash-image-preview`** | Vertex AI | `vertex_ai/gemini-3.1-flash-image-preview` |
 | **`gemini-3.1-pro-preview`** | Vertex AI | `vertex_ai/gemini-3.1-pro-preview` |
 | **`gemini-3.1-pro-preview-customtools`** | Vertex AI | `vertex_ai/gemini-3.1-pro-preview` (with tools) |
-| **`gemini-3-flash-preview`** | Vertex AI | `vertex_ai/gemini-3-flash-preview` |
 | **`gemini-2.5-pro`** | Vertex AI | `vertex_ai/gemini-2.5-pro` |
-| **`gemini-2.5-flash`** | Vertex AI | `vertex_ai/gemini-2.5-flash` |
-| **`gemini-2.5-flash-lite`** | Vertex AI | `vertex_ai/gemini-2.5-flash-lite` |
 | **`nova-2-lite`** | AWS Bedrock | `bedrock/global.amazon.nova-2-lite-v1:0` |
 | **`minimax-m2.5`** | AWS Bedrock | `bedrock/minimax.minimax-m2.5` |
 | **`kimi-k2.5`** | AWS Bedrock | `bedrock/moonshotai.kimi-k2.5` |
 | **`gpt-5.2`** | Azure OpenAI | `azure/gpt-5.2` (with reasoning support) |
+| **`gpt-5.4-mini`** | Azure OpenAI | `azure/gpt-5.4-mini` |
+| **`gpt-5.4-nano`** | Azure OpenAI | `azure/gpt-5.4-nano` |
+| **`gpt-5.4`** | Azure OpenAI | `azure/gpt-5.4` |
+| **`gpt-5.6-terra`** | Azure OpenAI | `azure/gpt-5.6-terra` |
+| **`gpt-5.6-luna`** | Azure OpenAI | `azure/gpt-5.6-luna` |
+| **`gpt-5.6-sol`** | Azure OpenAI | `azure/gpt-5.6-sol` |
 
 ---
 
@@ -192,6 +195,108 @@ curl -X POST 'http://localhost:4000/key/generate' \
             "maxTokens": 8192
           },
           {
+            "id": "gpt-5.4-mini",
+            "name": "gpt-5.4-mini",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "gpt-5.4-nano",
+            "name": "gpt-5.4-nano",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "gpt-5.4",
+            "name": "gpt-5.4",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "gpt-5.6-terra",
+            "name": "gpt-5.6-terra",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "gpt-5.6-luna",
+            "name": "gpt-5.6-luna",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
+            "id": "gpt-5.6-sol",
+            "name": "gpt-5.6-sol",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 128000,
+            "maxTokens": 8192
+          },
+          {
             "id": "gemini-3.1-flash-image-preview",
             "name": "gemini-3.1-flash-image-preview",
             "reasoning": true,
@@ -243,23 +348,6 @@ curl -X POST 'http://localhost:4000/key/generate' \
             "maxTokens": 8192
           },
           {
-            "id": "gemini-3-flash-preview",
-            "name": "gemini-3-flash-preview",
-            "reasoning": true,
-            "input": [
-              "text",
-              "image"
-            ],
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            },
-            "contextWindow": 1048576,
-            "maxTokens": 8192
-          },
-          {
             "id": "gemini-2.5-pro",
             "name": "gemini-2.5-pro",
             "reasoning": true,
@@ -274,40 +362,6 @@ curl -X POST 'http://localhost:4000/key/generate' \
               "cacheWrite": 0
             },
             "contextWindow": 2097152,
-            "maxTokens": 8192
-          },
-          {
-            "id": "gemini-2.5-flash",
-            "name": "gemini-2.5-flash",
-            "reasoning": false,
-            "input": [
-              "text",
-              "image"
-            ],
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            },
-            "contextWindow": 1048576,
-            "maxTokens": 8192
-          },
-          {
-            "id": "gemini-2.5-flash-lite",
-            "name": "gemini-2.5-flash-lite",
-            "reasoning": false,
-            "input": [
-              "text",
-              "image"
-            ],
-            "cost": {
-              "input": 0,
-              "output": 0,
-              "cacheRead": 0,
-              "cacheWrite": 0
-            },
-            "contextWindow": 1048576,
             "maxTokens": 8192
           },
           {
